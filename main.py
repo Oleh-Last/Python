@@ -5,13 +5,24 @@ from tkinter import filedialog
 import PIL.ImageOps
 from PIL import Image
 import deff as fl
-
-##--------------------------------------------------------------------------------------------------------------------##
+import errno
+import os
 
 ##Creating a folder at the root of the program-------------------------------------------------------------------------#
 fl.make_sure_path_exists('Edited photos')
 #----------------------------------------------------------------------------------------------------------------------#
+##Creating a folder at the root of the program
+def make_sure_path_exists(path):
+    try: os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
 
+##Фуfunction that translates from cm to pixel
+def cm_in_px(cm):
+    global px
+    px = int(cm) * 38
+    return px
 ##ФScale and store aspect ratio
 def scale_image(input_image_path,
                 output_image_path,
